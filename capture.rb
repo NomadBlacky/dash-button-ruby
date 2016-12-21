@@ -4,7 +4,7 @@ require "packetfu"
 include PacketFu
 
 def get_capture(iface,filter)
-  cap = Capture.new(:iface=>iface, :start=>true, :filter=>filter)
+  cap = Capture.new(:iface=>iface, :start=>true, :filter=>filter, :timeout=>5000)
   cap.stream.each do |pkt|
     next unless ARPPacket.can_parse?(pkt)
     t_stamp  = Time.now.strftime("%Y-%m-%d %H:%M:%S.%6N")
