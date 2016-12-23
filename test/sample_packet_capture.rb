@@ -5,7 +5,7 @@ require "packetfu"
 include PacketFu
 
 def get_capture(filter)
-  ouis = Hash[CSV.read('lib/oui.csv').map{|ary| [ary[1], ary[2]]}]
+  ouis = Hash[CSV.read('../lib/dash-button/oui.csv').map{|ary| [ary[1], ary[2]]}]
   ouis.default = "unknown"
 
   capture = Capture.new(iface: Utils.whoami?[:iface], start: true, filter: filter, timeout: 5000)
