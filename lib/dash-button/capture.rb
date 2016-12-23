@@ -5,8 +5,11 @@ require 'packetfu'
 require 'csv'
 
 module DashButton
-
+  
   class Capture
+
+    @ouis = Hash[CSV.read(File.dirname(__FILE__) + '/oui.csv').map{|ary| [ary[1], ary[2]]}]
+    @ouis.default = "unknown"
 
     attr_reader :options
 
@@ -18,17 +21,29 @@ module DashButton
         timeout: 5000,
       }.merge(options)
       @capture = PacketFu::Capture.new(@options)
-      @ouis = Hash[CSV.read(File.dirname(__FILE__) + '/oui.csv').map{|ary| [ary[1], ary[2]]}]
     end
 
     def stream_each(&block)
       @capture.stream.each do |packet|
-        time_stamp = Time.now.strftime("%Y-%m-%d %H:%M:%S.%6N")
-        arp_packet = ARPPacket.parse(packet)
-        src_mac = EthHeader.str2mac(arp_packet.eth_src)
-        manufacturer = ouis[src_mac.gsub(':', '')[0, 6].upcase]
-        
+        if PacketFu::ARPPacket.can_parse?(packet)
+          time_stamp = Time.now
+          arp_packet = PacketFu::ARPPacket.parse(packet)
+          src_mac = PacketFu::EthHeader.str2mac(arp_packet.eth_src)
+          manufacturer = get_manufacturer(src_mac)
+          hash = {
+            time_stamp: time_stamp,
+            arp_packet: arp_packet,
+            src_mac: src_mac,
+            manufacturer: manufacturer,
+          }
+          ret = block.call(hash)
+          break if ret == false
+        end
       end
+    end
+
+    def self.get_manufacturer(mac)
+      @ouis[mac.gsub(':', '')[0,6].upcase] 
     end
     
   end
