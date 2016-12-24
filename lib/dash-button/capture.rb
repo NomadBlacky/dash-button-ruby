@@ -29,7 +29,7 @@ module DashButton
           time_stamp = Time.now
           arp_packet = PacketFu::ARPPacket.parse(packet)
           src_mac = PacketFu::EthHeader.str2mac(arp_packet.eth_src)
-          manufacturer = get_manufacturer(src_mac)
+          manufacturer = self.class.get_manufacturer(src_mac)
           hash = {
             time_stamp: time_stamp,
             arp_packet: arp_packet,
