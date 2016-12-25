@@ -21,16 +21,4 @@ describe DashButton::Capture do
 
   end
 
-  describe '.get_manufacturer' do
-
-    it 'should be return "Amazon Technologies Inc." when given argument "88:71:e5:88:e5:20"' do
-      expect("Amazon Technologies Inc.").to eq DashButton::Capture.get_manufacturer("88:71:e5:88:e5:20")
-    end
-
-    it 'should be return "unknown" when given argument "ee:ee:ee:ee:ee:ee"' do
-      expect("unknown").to eq DashButton::Capture.get_manufacturer("ee:ee:ee:ee:ee:ee")
-    end
-    
-  end
-
 end

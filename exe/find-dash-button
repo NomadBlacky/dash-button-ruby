@@ -11,8 +11,8 @@ begin
   capture = DashButton::Capture.new(options)
 
   puts "Start Capture."
-  capture.stream_each do |cap|
-    puts "#{cap[:time_stamp]} => #{cap[:src_mac]} [#{cap[:manufacturer]}]"
+  capture.stream_each do |signal|
+    puts "#{signal.time_stamp} => #{signal.mac_address} [#{signal.manufacturer}]"
   end
 
 rescue Interrupt

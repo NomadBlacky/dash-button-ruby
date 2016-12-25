@@ -2,14 +2,12 @@
 # coding: utf-8
 
 require 'packetfu'
-require 'csv'
+
+require_relative './pushed_signal.rb'
 
 module DashButton
   
   class Capture
-
-    @ouis = Hash[CSV.read(File.dirname(__FILE__) + '/oui.csv').map{|ary| [ary[1], ary[2]]}]
-    @ouis.default = "unknown"
 
     attr_reader :options
 
@@ -26,26 +24,13 @@ module DashButton
     def stream_each(&block)
       @capture.stream.each do |packet|
         if PacketFu::ARPPacket.can_parse?(packet)
-          time_stamp = Time.now
-          arp_packet = PacketFu::ARPPacket.parse(packet)
-          src_mac = PacketFu::EthHeader.str2mac(arp_packet.eth_src)
-          manufacturer = self.class.get_manufacturer(src_mac)
-          hash = {
-            time_stamp: time_stamp,
-            arp_packet: arp_packet,
-            src_mac: src_mac,
-            manufacturer: manufacturer,
-          }
-          ret = block.call(hash)
+          signal = PushedSignal.new(PacketFu::ARPPacket.parse(packet))
+          ret = block.call(signal)
           break if ret == false
         end
       end
     end
 
-    def self.get_manufacturer(mac)
-      @ouis[mac.gsub(':', '')[0,6].upcase] 
-    end
-    
   end
   
 end
