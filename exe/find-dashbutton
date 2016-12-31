@@ -2,13 +2,13 @@
 # coding: utf-8
 
 require 'optparse'
-require_relative  '../lib/dash-button/capture.rb'
+require_relative  '../lib/dashbutton/capture.rb'
 
 begin
   options = Hash[ARGV.getopts('', 'iface:', 'timeout:').map{|k,v| [k.to_sym, v]}]
   options.delete_if{|k,v| v.nil?}
   options[:timeout] = options[:timeout].to_i unless options[:timeout].nil?
-  capture = DashButton::Capture.new(options)
+  capture = Dashbutton::Capture.new(options)
 
   puts "Start Capture. [iface: #{capture.options[:iface]}, timeout: #{capture.options[:timeout]}]"
   capture.stream_each do |signal|

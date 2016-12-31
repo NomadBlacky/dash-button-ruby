@@ -1,12 +1,12 @@
 #! /usr/bin/env ruby
 # coding: utf-8
 
-require(File.dirname(__FILE__) +  '/../lib/dash-button.rb')
+require(File.dirname(__FILE__) +  '/../lib/dashbutton.rb')
 
-describe DashButton::Capture do
+describe Dashbutton::Capture do
 
   before(:each) do
-    @cap = DashButton::Capture.new
+    @cap = Dashbutton::Capture.new
   end
     
   describe '#initialize' do
