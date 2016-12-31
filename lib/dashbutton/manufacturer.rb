@@ -3,7 +3,7 @@
 
 require 'csv'
 
-module DashButton
+module Dashbutton
 
   module Manufacturer
 

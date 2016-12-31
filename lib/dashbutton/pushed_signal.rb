@@ -5,7 +5,7 @@ require 'packetfu'
 
 require_relative './manufacturer.rb'
 
-module DashButton
+module Dashbutton
 
   class PushedSignal
 

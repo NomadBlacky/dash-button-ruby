@@ -5,7 +5,7 @@ require 'packetfu'
 
 require_relative './pushed_signal.rb'
 
-module DashButton
+module Dashbutton
   
   class Capture
 

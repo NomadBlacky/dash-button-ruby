@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'dash-button/version'
+require 'dashbutton/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "dash-button-ruby"
-  spec.version       = DashButton::VERSION
+  spec.name          = "dashbutton-ruby"
+  spec.version       = Dashbutton::VERSION
   spec.authors       = ["NomadBlacky"]
   spec.email         = ["hourou.hamurinzu@gmail.com"]
 
   spec.summary       = %q{Execute your code when Amazon Dash Button is pushed.}
-  spec.homepage      = "https://github.com/NomadBlacky/dash-button-ruby"
+  spec.homepage      = "https://github.com/NomadBlacky/dashbutton-ruby"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
