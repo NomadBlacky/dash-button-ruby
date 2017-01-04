@@ -7,7 +7,7 @@ require_relative './manufacturer.rb'
 
 module Dashbutton
 
-  class PushedSignal
+  class Packet
 
     attr_reader :arp_packet, :time_stamp
 

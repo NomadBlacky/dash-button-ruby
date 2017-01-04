@@ -3,7 +3,7 @@
 
 require 'packetfu'
 
-require_relative './pushed_signal.rb'
+require_relative './packet.rb'
 
 module Dashbutton
   
@@ -21,12 +21,11 @@ module Dashbutton
       @capture = PacketFu::Capture.new(@options)
     end
 
-    def stream_each(&block)
+    def each_packet(&block)
       @capture.stream.each do |packet|
         if PacketFu::ARPPacket.can_parse?(packet)
-          signal = PushedSignal.new(PacketFu::ARPPacket.parse(packet))
-          ret = block.call(signal)
-          break if ret == false
+          signal = Packet.new(PacketFu::ARPPacket.parse(packet))
+          block.call(signal)
         end
       end
     end
